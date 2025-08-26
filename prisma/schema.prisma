@@ -21,7 +21,7 @@ model Account {
   id_token                 String?
   session_state            String?
   refresh_token_expires_in Int?
-  User                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -154,7 +154,7 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Tag {
@@ -181,11 +181,11 @@ model User {
   usageLimit    Int             @default(1000)
   createdAt     DateTime        @default(now())
   updatedAt     DateTime
-  Account       Account[]
+  accounts      Account[]
   Link          Link[]
   Project       Project[]
   ProjectMember ProjectMember[]
-  Session       Session[]
+  sessions      Session[]
   Tag           Tag[]
 }
 
