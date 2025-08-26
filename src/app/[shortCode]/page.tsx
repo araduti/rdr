@@ -3,12 +3,12 @@ import { db } from "@/server/db";
 import { headers } from "next/headers";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     shortCode: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     [key: string]: string | string[] | undefined;
-  };
+  }>;
 }
 
 async function recordClick(linkId: string, request: any) {
@@ -59,7 +59,8 @@ async function recordClick(linkId: string, request: any) {
 }
 
 export default async function ShortCodePage({ params, searchParams }: PageProps) {
-  const { shortCode } = params;
+  const { shortCode } = await params;
+  const resolvedSearchParams = await searchParams;
   
   // Get domain from headers
   const headersList = headers();
@@ -124,7 +125,7 @@ export default async function ShortCodePage({ params, searchParams }: PageProps)
     const finalUrl = new URL(link.url);
     
     // Add UTM parameters from search params
-    Object.entries(searchParams).forEach(([key, value]) => {
+    Object.entries(resolvedSearchParams).forEach(([key, value]) => {
       if (key.startsWith("utm_") && typeof value === "string") {
         finalUrl.searchParams.set(key, value);
       }
