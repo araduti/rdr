@@ -63,9 +63,9 @@ export default async function ShortCodePage({ params, searchParams }: PageProps)
   const resolvedSearchParams = await searchParams;
   
   // Get domain from headers
-  const headersList = headers();
+  const headersList = await headers();
   const host = headersList.get("host") || "rdr.nu";
-  const domain = host.split(":")[0];
+  const domain = host.split(":")[0] || "rdr.nu";
 
   try {
     // Find the link

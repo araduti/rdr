@@ -4,15 +4,15 @@ import { headers } from "next/headers";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { shortCode: string } }
+  { params }: { params: Promise<{ shortCode: string }> }
 ) {
-  const { shortCode } = params;
+  const { shortCode } = await params;
   const searchParams = request.nextUrl.searchParams;
   
   // Get domain from host header
-  const headersList = headers();
+  const headersList = await headers();
   const host = headersList.get("host") || "rdr.nu";
-  const domain = host.split(":")[0]; // Remove port if present
+  const domain = host.split(":")[0] || "rdr.nu"; // Remove port if present
 
   try {
     // Find the link
