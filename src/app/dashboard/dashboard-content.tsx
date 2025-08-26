@@ -3,29 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-
-// Ampliosoft logo component
-const AmpliosoftLogo = ({ className = "", size = 32 }: { className?: string; size?: number }) => (
-  <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className={className}>
-    <g>
-      <path 
-        fill="currentColor" 
-        fillRule="nonzero" 
-        d="m47.38755,168.97282l-46.67661,0l12.17578,-20.62481l49.46724,0c4.25239,-0.01576 8.38852,1.23087 11.8768,3.53478c9.26889,5.99652 14.6508,16.0801 14.25214,26.73178c-12.6907,-6.29631 -26.77674,-9.6102 -41.09535,-9.64175zm0,0"
-      />
-      <path 
-        fill="currentColor" 
-        fillRule="nonzero" 
-        d="m152.61756,168.97282l46.67665,0l-12.25887,-20.62481l-49.38419,0c-4.25239,-0.01576 -8.38848,1.23087 -11.8768,3.53478c-9.26885,5.99652 -14.6508,16.0801 -14.25214,26.73178c12.69075,-6.29631 26.77679,-9.6102 41.09535,-9.64175zm0,0"
-      />
-      <path 
-        fill="currentColor" 
-        fillRule="nonzero" 
-        d="m99.46269,75.42741l36.7267,60.40688l43.40427,0l-80.13096,-134.41632l-79.26718,134.41632l42.60694,0l36.66023,-60.40688zm0,0"
-      />
-    </g>
-  </svg>
-);
+import { AmpliosoftLogo } from "@/components/ampliosoft-logo";
 import { 
   PlusIcon, 
   LinkIcon, 
@@ -117,7 +95,7 @@ export default function DashboardContent() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Link href="/" className="flex items-center space-x-3">
-                <AmpliosoftLogo className="text-[#3d85b8]" size={32} />
+                <AmpliosoftLogo className="w-8 h-8 text-white" />
                 <span className="text-xl font-bold text-white">rdr.nu</span>
               </Link>
               <div className="hidden md:block w-px h-6 bg-neutral-700"></div>

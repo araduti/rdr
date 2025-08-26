@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { AmpliosoftLogo } from "@/components/ampliosoft-logo";
 
 interface RedirectPageProps {
   targetUrl: string;
@@ -32,28 +33,7 @@ export default function RedirectPage({ targetUrl, shortCode, linkTitle }: Redire
     return () => clearInterval(timer);
   }, [targetUrl]);
 
-  // Your Ampliosoft logo SVG
-  const logoSvg = (
-    <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-      <g>
-        <path 
-          fill="#3d85b8" 
-          fillRule="nonzero" 
-          d="m47.38755,168.97282l-46.67661,0l12.17578,-20.62481l49.46724,0c4.25239,-0.01576 8.38852,1.23087 11.8768,3.53478c9.26889,5.99652 14.6508,16.0801 14.25214,26.73178c-12.6907,-6.29631 -26.77674,-9.6102 -41.09535,-9.64175zm0,0"
-        />
-        <path 
-          fill="#3d85b8" 
-          fillRule="nonzero" 
-          d="m152.61756,168.97282l46.67665,0l-12.25887,-20.62481l-49.38419,0c-4.25239,-0.01576 -8.38848,1.23087 -11.8768,3.53478c-9.26885,5.99652 -14.6508,16.0801 -14.25214,26.73178c12.69075,-6.29631 26.77679,-9.6102 41.09535,-9.64175zm0,0"
-        />
-        <path 
-          fill="#3d85b8" 
-          fillRule="nonzero" 
-          d="m99.46269,75.42741l36.7267,60.40688l43.40427,0l-80.13096,-134.41632l-79.26718,134.41632l42.60694,0l36.66023,-60.40688zm0,0"
-        />
-      </g>
-    </svg>
-  );
+
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
@@ -115,7 +95,7 @@ export default function RedirectPage({ targetUrl, shortCode, linkTitle }: Redire
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {logoSvg}
+            <AmpliosoftLogo className="w-16 h-16 text-white" />
             <span className="ml-3 text-2xl font-bold text-white">rdr.nu</span>
           </motion.div>
 

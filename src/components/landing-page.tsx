@@ -20,29 +20,7 @@ import {
 } from "lucide-react";
 import { api } from "@/trpc/react";
 import Link from "next/link";
-
-// Ampliosoft logo component
-const AmpliosoftLogo = ({ className = "", size = 32 }: { className?: string; size?: number }) => (
-  <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className={className}>
-    <g>
-      <path 
-        fill="currentColor" 
-        fillRule="nonzero" 
-        d="m47.38755,168.97282l-46.67661,0l12.17578,-20.62481l49.46724,0c4.25239,-0.01576 8.38852,1.23087 11.8768,3.53478c9.26889,5.99652 14.6508,16.0801 14.25214,26.73178c-12.6907,-6.29631 -26.77674,-9.6102 -41.09535,-9.64175zm0,0"
-      />
-      <path 
-        fill="currentColor" 
-        fillRule="nonzero" 
-        d="m152.61756,168.97282l46.67665,0l-12.25887,-20.62481l-49.38419,0c-4.25239,-0.01576 -8.38848,1.23087 -11.8768,3.53478c-9.26885,5.99652 -14.6508,16.0801 -14.25214,26.73178c12.69075,-6.29631 26.77679,-9.6102 41.09535,-9.64175zm0,0"
-      />
-      <path 
-        fill="currentColor" 
-        fillRule="nonzero" 
-        d="m99.46269,75.42741l36.7267,60.40688l43.40427,0l-80.13096,-134.41632l-79.26718,134.41632l42.60694,0l36.66023,-60.40688zm0,0"
-      />
-    </g>
-  </svg>
-);
+import { AmpliosoftLogo } from "@/components/ampliosoft-logo";
 
 export function LandingPage() {
   const [url, setUrl] = useState("");
@@ -90,7 +68,7 @@ export function LandingPage() {
           { 
             name: "rdr.nu", 
             link: "/", 
-            icon: <AmpliosoftLogo className="text-[#3d85b8]" size={20} />,
+            icon: <AmpliosoftLogo className="w-5 h-5 text-white" />,
             isLogo: true 
           }
         ]} 
@@ -110,10 +88,20 @@ export function LandingPage() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
+            {/* Prominent Logo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, type: "spring", damping: 15 }}
+              className="flex justify-center mb-8"
+            >
+              <AmpliosoftLogo className="w-24 h-24 md:w-32 md:h-32 text-white drop-shadow-2xl" />
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50 relative"
             >
               <motion.div
@@ -384,7 +372,7 @@ export function LandingPage() {
             {/* Company Info */}
             <div className="md:col-span-1">
               <div className="flex items-center space-x-3 mb-4">
-                <AmpliosoftLogo className="text-[#3d85b8]" size={28} />
+                <AmpliosoftLogo className="w-7 h-7 text-white" />
                 <span className="text-lg font-bold text-white">rdr.nu</span>
               </div>
               <p className="text-gray-400 text-sm mb-4">
