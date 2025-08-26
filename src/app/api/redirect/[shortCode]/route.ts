@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { db } from "@/server/db";
 import { headers } from "next/headers";
 
@@ -11,8 +12,8 @@ export async function GET(
   
   // Get domain from host header
   const headersList = await headers();
-  const host = headersList.get("host") || "rdr.nu";
-  const domain = host.split(":")[0] || "rdr.nu"; // Remove port if present
+  const host = headersList.get("host") ?? "rdr.nu";
+  const domain = host.split(":")[0] ?? "rdr.nu"; // Remove port if present
 
   try {
     // Find the link
@@ -41,10 +42,10 @@ export async function GET(
     }
 
     // Get client information for analytics
-    const userAgent = request.headers.get("user-agent") || "";
-    const referer = request.headers.get("referer") || "";
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || 
-               request.headers.get("x-real-ip") || 
+    const userAgent = request.headers.get("user-agent") ?? "";
+    const referer = request.headers.get("referer") ?? "";
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? 
+               request.headers.get("x-real-ip") ?? 
                "unknown";
 
     // Extract UTM parameters
@@ -78,7 +79,7 @@ export async function GET(
 
     // Record the click event asynchronously
     // In production, you might want to use a queue for this
-    Promise.resolve().then(async () => {
+    void Promise.resolve().then(async () => {
       try {
         await db.clickEvent.create({
           data: {

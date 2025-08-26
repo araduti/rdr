@@ -39,7 +39,7 @@ export default function DashboardPage() {
   // Fetch user's links
   const { data: linksData, isLoading, refetch } = api.link.getMyLinks.useQuery({
     limit: 20,
-    search: search || undefined,
+    search: search ?? undefined,
   });
 
   // Create link mutation
@@ -47,14 +47,14 @@ export default function DashboardPage() {
     onSuccess: () => {
       setShowCreateForm(false);
       setFormData({ url: "", title: "", description: "", customCode: "" });
-      refetch();
+      void refetch();
     },
   });
 
   // Delete link mutation
   const deleteLinkMutation = api.link.delete.useMutation({
     onSuccess: () => {
-      refetch();
+      void refetch();
     },
   });
 
@@ -64,14 +64,14 @@ export default function DashboardPage() {
 
     createLinkMutation.mutate({
       url: formData.url,
-      title: formData.title || undefined,
-      description: formData.description || undefined,
-      customCode: formData.customCode || undefined,
+      title: formData.title ?? undefined,
+      description: formData.description ?? undefined,
+      customCode: formData.customCode ?? undefined,
     });
   };
 
   const handleCopyLink = (url: string) => {
-    navigator.clipboard.writeText(url);
+    void navigator.clipboard.writeText(url);
     // You could add a toast notification here
   };
 
@@ -168,7 +168,7 @@ export default function DashboardPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
                       <h3 className="text-lg font-medium text-white truncate">
-                        {link.title || "Untitled Link"}
+                        {link.title ?? "Untitled Link"}
                       </h3>
                       <span className="px-2 py-1 bg-purple-600/20 text-purple-400 text-xs rounded-full">
                         {link.clicks} clicks
@@ -299,7 +299,7 @@ export default function DashboardPage() {
                   className="w-full px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
                 />
                 <p className="text-xs text-gray-400 mt-1">
-                  Will be: rdr.nu/{formData.customCode || "abc123"}
+                  Will be: rdr.nu/{formData.customCode ?? "abc123"}
                 </p>
               </div>
               

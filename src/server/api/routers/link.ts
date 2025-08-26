@@ -90,7 +90,7 @@ export const linkRouter = createTRPCRouter({
       }
 
       // Generate short code
-      let shortCode = input.customCode || generateShortCode();
+      let shortCode = input.customCode ?? generateShortCode();
       
       // Ensure short code is unique
       let attempts = 0;
@@ -343,21 +343,21 @@ export const linkRouter = createTRPCRouter({
       
       const countries = clickEvents.reduce((acc, event) => {
         if (event.country) {
-          acc[event.country] = (acc[event.country] || 0) + 1;
+          acc[event.country] = (acc[event.country] ?? 0) + 1;
         }
         return acc;
       }, {} as Record<string, number>);
 
       const devices = clickEvents.reduce((acc, event) => {
         if (event.device) {
-          acc[event.device] = (acc[event.device] || 0) + 1;
+          acc[event.device] = (acc[event.device] ?? 0) + 1;
         }
         return acc;
       }, {} as Record<string, number>);
 
       const browsers = clickEvents.reduce((acc, event) => {
         if (event.browser) {
-          acc[event.browser] = (acc[event.browser] || 0) + 1;
+          acc[event.browser] = (acc[event.browser] ?? 0) + 1;
         }
         return acc;
       }, {} as Record<string, number>);
@@ -366,12 +366,12 @@ export const linkRouter = createTRPCRouter({
         if (event.referer) {
           try {
             const domain = new URL(event.referer).hostname;
-            acc[domain] = (acc[domain] || 0) + 1;
+            acc[domain] = (acc[domain] ?? 0) + 1;
           } catch {
-            acc["Direct"] = (acc["Direct"] || 0) + 1;
+            acc.Direct = (acc.Direct ?? 0) + 1;
           }
         } else {
-          acc["Direct"] = (acc["Direct"] || 0) + 1;
+          acc.Direct = (acc.Direct ?? 0) + 1;
         }
         return acc;
       }, {} as Record<string, number>);

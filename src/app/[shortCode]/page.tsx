@@ -1,21 +1,21 @@
 import { redirect } from "next/navigation";
 import { db } from "@/server/db";
 import { headers } from "next/headers";
+import Link from "next/link";
+import type { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
 
 interface PageProps {
   params: Promise<{
     shortCode: string;
   }>;
-  searchParams: Promise<{
-    [key: string]: string | string[] | undefined;
-  }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-async function recordClick(linkId: string, request: any) {
+async function recordClick(linkId: string, request: { headers: ReadonlyHeaders }) {
   try {
     // This would be better done in the API route, but for now we'll handle it here
-    const userAgent = request.headers.get("user-agent") || "";
-    const referer = request.headers.get("referer") || "";
+    const userAgent = request.headers.get("user-agent") ?? "";
+    const referer = request.headers.get("referer") ?? "";
     
     // Parse user agent for device/browser info (simplified)
     const device = /Mobile|Android|iPhone|iPad/.test(userAgent) ? "Mobile" : "Desktop";
@@ -37,7 +37,7 @@ async function recordClick(linkId: string, request: any) {
       data: {
         linkId,
         userAgent,
-        referer: referer || null,
+        referer: referer ?? null,
         device,
         browser,
         os,
@@ -64,8 +64,8 @@ export default async function ShortCodePage({ params, searchParams }: PageProps)
   
   // Get domain from headers
   const headersList = await headers();
-  const host = headersList.get("host") || "rdr.nu";
-  const domain = host.split(":")[0] || "rdr.nu";
+  const host = headersList.get("host") ?? "rdr.nu";
+  const domain = host.split(":")[0] ?? "rdr.nu";
 
   try {
     // Find the link
@@ -85,14 +85,14 @@ export default async function ShortCodePage({ params, searchParams }: PageProps)
           <div className="text-center">
             <h1 className="text-4xl font-bold text-white mb-4">404 - Link Not Found</h1>
             <p className="text-gray-400 mb-8">
-              The short link you're looking for doesn't exist or has been removed.
+              The short link you&apos;re looking for doesn&apos;t exist or has been removed.
             </p>
-            <a 
+            <Link 
               href="/" 
               className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
             >
               Go to Homepage
-            </a>
+            </Link>
           </div>
         </div>
       );
@@ -107,19 +107,19 @@ export default async function ShortCodePage({ params, searchParams }: PageProps)
             <p className="text-gray-400 mb-8">
               This link has expired and is no longer available.
             </p>
-            <a 
+            <Link 
               href="/" 
               className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
             >
               Go to Homepage
-            </a>
+            </Link>
           </div>
         </div>
       );
     }
 
     // Record click analytics (async)
-    Promise.resolve().then(() => recordClick(link.id, { headers: headersList }));
+    void Promise.resolve().then(() => recordClick(link.id, { headers: headersList }));
 
     // Construct the final URL with UTM parameters if they exist
     const finalUrl = new URL(link.url);
@@ -142,12 +142,12 @@ export default async function ShortCodePage({ params, searchParams }: PageProps)
           <p className="text-gray-400 mb-8">
             Something went wrong. Please try again later.
           </p>
-          <a 
+          <Link 
             href="/" 
             className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
           >
             Go to Homepage
-          </a>
+          </Link>
         </div>
       </div>
     );
