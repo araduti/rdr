@@ -40,7 +40,7 @@ export const linkRouter = createTRPCRouter({
           domain: input.domain,
         },
         include: {
-          user: {
+          User: {
             select: {
               id: true,
               name: true,
@@ -136,7 +136,7 @@ export const linkRouter = createTRPCRouter({
           projectId: input.projectId,
         },
         include: {
-          user: {
+          User: {
             select: {
               id: true,
               name: true,
@@ -179,7 +179,7 @@ export const linkRouter = createTRPCRouter({
         cursor: input.cursor ? { id: input.cursor } : undefined,
         orderBy: { createdAt: "desc" },
         include: {
-          project: {
+          Project: {
             select: {
               id: true,
               name: true,
@@ -193,7 +193,7 @@ export const linkRouter = createTRPCRouter({
           },
           _count: {
             select: {
-              clickEvents: true,
+              ClickEvent: true,
             },
           },
         },
@@ -209,7 +209,7 @@ export const linkRouter = createTRPCRouter({
         links: links.map(link => ({
           ...link,
           shortUrl: `https://${link.domain}/${link.shortCode}`,
-          clicks: link._count.clickEvents,
+          clicks: link._count.ClickEvent,
         })),
         nextCursor,
       };
@@ -247,7 +247,7 @@ export const linkRouter = createTRPCRouter({
         where: { id },
         data: updateData,
         include: {
-          project: {
+          Project: {
             select: {
               id: true,
               name: true,
@@ -391,7 +391,7 @@ export const linkRouter = createTRPCRouter({
         referrers: Object.entries(referrers)
           .sort(([,a], [,b]) => b - a)
           .slice(0, 10),
-        clickEvents: clickEvents.slice(-100), // Last 100 clicks for timeline
+        ClickEvent: clickEvents.slice(-100), // Last 100 clicks for timeline
       };
     }),
 
