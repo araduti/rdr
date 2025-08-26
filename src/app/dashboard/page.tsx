@@ -14,7 +14,7 @@ import {
   TrashIcon,
   CalendarIcon
 } from "lucide-react";
-import { api } from "~/trpc/react";
+import { api } from "@/trpc/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
