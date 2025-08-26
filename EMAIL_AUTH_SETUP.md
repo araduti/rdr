@@ -147,13 +147,37 @@ These are already defined in your Prisma schema and will be created when you run
 - **AWS SES**: Ensure you're not in sandbox mode for production
 - **Resend**: Make sure your domain is verified and DNS records are set
 
-## Customization
+## Custom Email Templates
 
-You can customize the email template by creating a custom email provider configuration in your NextAuth setup. The default template includes:
+This project includes professionally designed email templates with:
 
-- Your app name and branding
-- Clear call-to-action button
-- Security message about link expiration
-- Professional email styling
+### Features
+- **Company branding** with Ampliosoft logo
+- **Professional styling** similar to GitHub/Vercel emails
+- **Both HTML and text versions** for maximum compatibility
+- **Mobile-responsive design** that works on all devices
+- **Security warnings** and expiration notices
+- **Custom brand colors** (#3d85b8)
 
-For advanced customization, see the NextAuth.js email provider documentation.
+### Email Preview
+You can preview the email template during development at: `http://localhost:3000/api/email-preview`
+
+### Template Customization
+Email templates are located in `src/lib/email-templates/`:
+- `magic-link.ts` - Main email template with HTML and text versions
+- `preview.ts` - Preview utilities for development
+
+### Brand Customization
+To customize the email branding:
+1. Update the logo SVG in `magic-link.ts`
+2. Change the brand colors (currently `#3d85b8`)
+3. Modify the company name and support email
+4. Adjust the styling to match your brand guidelines
+
+### Template Structure
+The email includes:
+- **Header** with logo and company name
+- **Clear call-to-action** button
+- **Security notice** with expiration time
+- **Fallback URL** for copying/pasting
+- **Professional footer** with contact information

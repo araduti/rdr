@@ -3,6 +3,7 @@ import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 
 import { db } from "@/server/db";
+import { createMagicLinkEmail } from "@/lib/email-templates/magic-link";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -35,13 +36,41 @@ export const authConfig = {
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
+        port: process.env.EMAIL_SERVER_PORT ? parseInt(process.env.EMAIL_SERVER_PORT, 10) : 587,
         auth: {
           user: process.env.EMAIL_SERVER_USER,
           pass: process.env.EMAIL_SERVER_PASSWORD,
         },
       },
       from: process.env.EMAIL_FROM,
+      sendVerificationRequest: async ({ identifier: email, url, provider }) => {
+        const { subject, html, text } = createMagicLinkEmail({ 
+          url, 
+          email 
+        });
+
+        const { host } = new URL(url);
+        const transport = provider.server ? await import("nodemailer").then(m => 
+          m.createTransport(provider.server)
+        ) : null;
+
+        if (!transport) {
+          throw new Error("Email transport not configured");
+        }
+
+        const result = await transport.sendMail({
+          to: email,
+          from: provider.from,
+          subject,
+          text,
+          html,
+        });
+
+        const failed = result.rejected.concat(result.pending).filter(Boolean);
+        if (failed.length) {
+          throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`);
+        }
+      },
     }),
   ],
   adapter: PrismaAdapter(db),

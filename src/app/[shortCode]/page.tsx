@@ -1,8 +1,8 @@
-import { redirect } from "next/navigation";
 import { db } from "@/server/db";
 import { headers } from "next/headers";
 import Link from "next/link";
 import type { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
+import RedirectPage from "./redirect-page";
 
 interface PageProps {
   params: Promise<{
@@ -35,6 +35,7 @@ async function recordClick(linkId: string, request: { headers: ReadonlyHeaders }
 
     await db.clickEvent.create({
       data: {
+        id: `click_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         linkId,
         userAgent,
         referer: referer ?? null,
@@ -89,7 +90,7 @@ export default async function ShortCodePage({ params, searchParams }: PageProps)
             </p>
             <Link 
               href="/" 
-              className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+              className="px-6 py-3 bg-[#3d85b8] text-white rounded-lg hover:bg-[#2c6a94] transition-colors"
             >
               Go to Homepage
             </Link>
@@ -109,7 +110,7 @@ export default async function ShortCodePage({ params, searchParams }: PageProps)
             </p>
             <Link 
               href="/" 
-              className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+              className="px-6 py-3 bg-[#3d85b8] text-white rounded-lg hover:bg-[#2c6a94] transition-colors"
             >
               Go to Homepage
             </Link>
@@ -131,8 +132,14 @@ export default async function ShortCodePage({ params, searchParams }: PageProps)
       }
     });
 
-    // Redirect to the original URL
-    redirect(finalUrl.toString());
+    // Return the branded redirect page instead of immediate redirect
+    return (
+      <RedirectPage 
+        targetUrl={finalUrl.toString()} 
+        shortCode={shortCode}
+        linkTitle={link.title ?? undefined}
+      />
+    );
   } catch (error) {
     console.error("Error in redirect:", error);
     return (
