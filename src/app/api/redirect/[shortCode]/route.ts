@@ -10,9 +10,9 @@ export async function GET(
   const searchParams = request.nextUrl.searchParams;
   
   // Get domain from host header
-  const headersList = headers();
+  const headersList = await headers();
   const host = headersList.get("host") || "rdr.nu";
-  const domain = host.split(":")[0]; // Remove port if present
+  const domain = host.split(":")[0] || "rdr.nu"; // Remove port if present
 
   try {
     // Find the link
