@@ -18,6 +18,9 @@ import { api } from "@/trpc/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
+// Force dynamic rendering to prevent prerendering issues with useSession
+export const dynamic = 'force-dynamic';
+
 interface CreateLinkFormData {
   url: string;
   title?: string;
@@ -26,7 +29,7 @@ interface CreateLinkFormData {
 }
 
 export default function DashboardPage() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [search, setSearch] = useState("");
   const [formData, setFormData] = useState<CreateLinkFormData>({
@@ -40,6 +43,8 @@ export default function DashboardPage() {
   const { data: linksData, isLoading, refetch } = api.link.getMyLinks.useQuery({
     limit: 20,
     search: search ?? undefined,
+  }, {
+    enabled: !!session, // Only fetch when session is available
   });
 
   // Create link mutation
@@ -80,6 +85,17 @@ export default function DashboardPage() {
       deleteLinkMutation.mutate({ id });
     }
   };
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!session) {
     return (
