@@ -83,6 +83,7 @@ export async function GET(
       try {
         await db.clickEvent.create({
           data: {
+            id: `click_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             linkId: link.id,
             ip,
             userAgent,
