@@ -106,12 +106,7 @@ export function LandingPage() {
               <span className="bg-gradient-to-r from-[#3d85b8] via-[#4a90d9] to-[#2c6a94] bg-clip-text text-transparent animate-pulse">
                 Track Everything.
               </span>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                className="absolute -top-10 left-1/2 w-2 h-2 bg-[#3d85b8] rounded-full"
-              />
+
             </motion.div>
             
             <motion.p
