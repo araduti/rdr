@@ -125,6 +125,7 @@ export const linkRouter = createTRPCRouter({
       // Create the link
       const link = await ctx.db.link.create({
         data: {
+          id: `link_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           url: input.url,
           shortCode,
           domain: input.domain,
@@ -132,8 +133,9 @@ export const linkRouter = createTRPCRouter({
           description: input.description,
           password: input.password,
           expiresAt: input.expiresAt,
-          userId: ctx.session?.user?.id,
-          projectId: input.projectId,
+          userId: ctx.session?.user?.id ?? null,
+          projectId: input.projectId ?? null,
+          updatedAt: new Date(),
         },
         include: {
           User: {
@@ -186,9 +188,9 @@ export const linkRouter = createTRPCRouter({
               slug: true,
             },
           },
-          tags: {
+          LinkTag: {
             include: {
-              tag: true,
+              Tag: true,
             },
           },
           _count: {
@@ -254,9 +256,9 @@ export const linkRouter = createTRPCRouter({
               slug: true,
             },
           },
-          tags: {
+          LinkTag: {
             include: {
-              tag: true,
+              Tag: true,
             },
           },
         },
@@ -417,7 +419,10 @@ export const linkRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       // Create click event
       await ctx.db.clickEvent.create({
-        data: input,
+        data: {
+          id: `click_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          ...input,
+        },
       });
 
       // Increment link click count
