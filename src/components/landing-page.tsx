@@ -12,10 +12,37 @@ import {
   ShieldIcon,
   ArrowRightIcon,
   CopyIcon,
-  QrCodeIcon
+  QrCodeIcon,
+  TwitterIcon,
+  GithubIcon,
+  LinkedinIcon,
+  MailIcon
 } from "lucide-react";
 import { api } from "@/trpc/react";
 import Link from "next/link";
+
+// Ampliosoft logo component
+const AmpliosoftLogo = ({ className = "", size = 32 }: { className?: string; size?: number }) => (
+  <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className={className}>
+    <g>
+      <path 
+        fill="currentColor" 
+        fillRule="nonzero" 
+        d="m47.38755,168.97282l-46.67661,0l12.17578,-20.62481l49.46724,0c4.25239,-0.01576 8.38852,1.23087 11.8768,3.53478c9.26889,5.99652 14.6508,16.0801 14.25214,26.73178c-12.6907,-6.29631 -26.77674,-9.6102 -41.09535,-9.64175zm0,0"
+      />
+      <path 
+        fill="currentColor" 
+        fillRule="nonzero" 
+        d="m152.61756,168.97282l46.67665,0l-12.25887,-20.62481l-49.38419,0c-4.25239,-0.01576 -8.38848,1.23087 -11.8768,3.53478c-9.26885,5.99652 -14.6508,16.0801 -14.25214,26.73178c12.69075,-6.29631 26.77679,-9.6102 41.09535,-9.64175zm0,0"
+      />
+      <path 
+        fill="currentColor" 
+        fillRule="nonzero" 
+        d="m99.46269,75.42741l36.7267,60.40688l43.40427,0l-80.13096,-134.41632l-79.26718,134.41632l42.60694,0l36.66023,-60.40688zm0,0"
+      />
+    </g>
+  </svg>
+);
 
 export function LandingPage() {
   const [url, setUrl] = useState("");
@@ -55,12 +82,44 @@ export function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
-      <FloatingNav navItems={navItems} />
+    <div className="min-h-screen bg-black antialiased relative overflow-hidden">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-neutral-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <Link href="/" className="flex items-center space-x-3">
+              <AmpliosoftLogo className="text-[#3d85b8]" size={32} />
+              <span className="text-xl font-bold text-white">rdr.nu</span>
+            </Link>
+            
+            {/* Navigation */}
+            <nav className="hidden md:flex items-center space-x-8">
+              <Link href="#features" className="text-gray-300 hover:text-white transition-colors">
+                Features
+              </Link>
+              <Link href="#pricing" className="text-gray-300 hover:text-white transition-colors">
+                Pricing
+              </Link>
+              <Link href="#analytics" className="text-gray-300 hover:text-white transition-colors">
+                Analytics
+              </Link>
+            </nav>
+            
+            {/* CTA Button */}
+            <Link href="/signin">
+              <Button className="bg-[#3d85b8] hover:bg-[#2c6a94] text-white">
+                Sign In
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </header>
+
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       
       {/* Hero Section */}
-      <div className="max-w-7xl mx-auto relative z-10 w-full pt-20 md:pt-0">
+      <div className="max-w-7xl mx-auto relative z-10 w-full pt-24 md:pt-16">
         <div className="min-h-screen flex flex-col items-center justify-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -258,6 +317,93 @@ export function LandingPage() {
           </motion.div>
         </div>
       </div>
+
+      {/* Professional Footer */}
+      <footer className="bg-neutral-900 border-t border-neutral-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Company Info */}
+            <div className="md:col-span-1">
+              <div className="flex items-center space-x-3 mb-4">
+                <AmpliosoftLogo className="text-[#3d85b8]" size={28} />
+                <span className="text-lg font-bold text-white">rdr.nu</span>
+              </div>
+              <p className="text-gray-400 text-sm mb-4">
+                Professional URL shortening with advanced analytics and branding. 
+                Built by Ampliosoft for modern businesses.
+              </p>
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-400 hover:text-[#3d85b8] transition-colors">
+                  <TwitterIcon className="h-5 w-5" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-[#3d85b8] transition-colors">
+                  <GithubIcon className="h-5 w-5" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-[#3d85b8] transition-colors">
+                  <LinkedinIcon className="h-5 w-5" />
+                </a>
+                <a href="mailto:support@rdr.nu" className="text-gray-400 hover:text-[#3d85b8] transition-colors">
+                  <MailIcon className="h-5 w-5" />
+                </a>
+              </div>
+            </div>
+
+            {/* Product */}
+            <div>
+              <h3 className="text-white font-semibold mb-4">Product</h3>
+              <ul className="space-y-2">
+                <li><Link href="#features" className="text-gray-400 hover:text-white transition-colors text-sm">Features</Link></li>
+                <li><Link href="#pricing" className="text-gray-400 hover:text-white transition-colors text-sm">Pricing</Link></li>
+                <li><Link href="#analytics" className="text-gray-400 hover:text-white transition-colors text-sm">Analytics</Link></li>
+                <li><Link href="/api-docs" className="text-gray-400 hover:text-white transition-colors text-sm">API</Link></li>
+                <li><Link href="/integrations" className="text-gray-400 hover:text-white transition-colors text-sm">Integrations</Link></li>
+              </ul>
+            </div>
+
+            {/* Resources */}
+            <div>
+              <h3 className="text-white font-semibold mb-4">Resources</h3>
+              <ul className="space-y-2">
+                <li><Link href="/docs" className="text-gray-400 hover:text-white transition-colors text-sm">Documentation</Link></li>
+                <li><Link href="/blog" className="text-gray-400 hover:text-white transition-colors text-sm">Blog</Link></li>
+                <li><Link href="/help" className="text-gray-400 hover:text-white transition-colors text-sm">Help Center</Link></li>
+                <li><Link href="/status" className="text-gray-400 hover:text-white transition-colors text-sm">Status</Link></li>
+                <li><Link href="/changelog" className="text-gray-400 hover:text-white transition-colors text-sm">Changelog</Link></li>
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h3 className="text-white font-semibold mb-4">Company</h3>
+              <ul className="space-y-2">
+                <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors text-sm">About</Link></li>
+                <li><Link href="/careers" className="text-gray-400 hover:text-white transition-colors text-sm">Careers</Link></li>
+                <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">Contact</Link></li>
+                <li><Link href="/privacy" className="text-gray-400 hover:text-white transition-colors text-sm">Privacy</Link></li>
+                <li><Link href="/terms" className="text-gray-400 hover:text-white transition-colors text-sm">Terms</Link></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="mt-8 pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center">
+            <div className="text-gray-400 text-sm">
+              © {new Date().getFullYear()} Ampliosoft. All rights reserved.
+            </div>
+            <div className="flex items-center space-x-6 mt-4 md:mt-0">
+              <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Terms of Service
+              </Link>
+              <Link href="/cookies" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Cookie Policy
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

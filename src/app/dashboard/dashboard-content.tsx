@@ -3,6 +3,29 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+
+// Ampliosoft logo component
+const AmpliosoftLogo = ({ className = "", size = 32 }: { className?: string; size?: number }) => (
+  <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className={className}>
+    <g>
+      <path 
+        fill="currentColor" 
+        fillRule="nonzero" 
+        d="m47.38755,168.97282l-46.67661,0l12.17578,-20.62481l49.46724,0c4.25239,-0.01576 8.38852,1.23087 11.8768,3.53478c9.26889,5.99652 14.6508,16.0801 14.25214,26.73178c-12.6907,-6.29631 -26.77674,-9.6102 -41.09535,-9.64175zm0,0"
+      />
+      <path 
+        fill="currentColor" 
+        fillRule="nonzero" 
+        d="m152.61756,168.97282l46.67665,0l-12.25887,-20.62481l-49.38419,0c-4.25239,-0.01576 -8.38848,1.23087 -11.8768,3.53478c-9.26885,5.99652 -14.6508,16.0801 -14.25214,26.73178c12.69075,-6.29631 26.77679,-9.6102 41.09535,-9.64175zm0,0"
+      />
+      <path 
+        fill="currentColor" 
+        fillRule="nonzero" 
+        d="m99.46269,75.42741l36.7267,60.40688l43.40427,0l-80.13096,-134.41632l-79.26718,134.41632l42.60694,0l36.66023,-60.40688zm0,0"
+      />
+    </g>
+  </svg>
+);
 import { 
   PlusIcon, 
   LinkIcon, 
@@ -15,6 +38,8 @@ import {
   CalendarIcon
 } from "lucide-react";
 import { api } from "@/trpc/react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface CreateLinkFormData {
   url: string;
@@ -90,19 +115,31 @@ export default function DashboardContent() {
       <div className="border-b border-neutral-800">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">Dashboard</h1>
-              <p className="text-gray-400 mt-1">
-                Manage your links and view analytics
-              </p>
+            <div className="flex items-center space-x-4">
+              <Link href="/" className="flex items-center space-x-3">
+                <AmpliosoftLogo className="text-[#3d85b8]" size={32} />
+                <span className="text-xl font-bold text-white">rdr.nu</span>
+              </Link>
+              <div className="hidden md:block w-px h-6 bg-neutral-700"></div>
+              <div className="hidden md:block">
+                <h1 className="text-2xl font-bold">Dashboard</h1>
+                <p className="text-gray-400 text-sm">
+                  Manage your links and view analytics
+                </p>
+              </div>
             </div>
-            <Button
-              onClick={() => setShowCreateForm(true)}
-              className="bg-[#3d85b8] hover:bg-[#2c6a94]"
-            >
-              <PlusIcon className="w-4 h-4 mr-2" />
-              Create Link
-            </Button>
+            <div className="flex items-center space-x-3">
+              <Link href="/" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Home
+              </Link>
+              <Button
+                onClick={() => setShowCreateForm(true)}
+                className="bg-[#3d85b8] hover:bg-[#2c6a94]"
+              >
+                <PlusIcon className="w-4 h-4 mr-2" />
+                Create Link
+              </Button>
+            </div>
           </div>
         </div>
       </div>
