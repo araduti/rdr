@@ -4,14 +4,14 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 
 // Force dynamic rendering to prevent prerendering issues with useSession
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 // Dynamically import the dashboard content to prevent SSR issues
-const DashboardContent = dynamic(() => import("./dashboard-content"), {
+const DashboardContent = nextDynamic(() => import("./dashboard-content"), {
   ssr: false,
   loading: () => (
     <div className="min-h-screen bg-black flex items-center justify-center">
