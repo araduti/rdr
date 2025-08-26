@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { db } from "~/server/db";
+import { db } from "@/server/db";
 import { headers } from "next/headers";
 
 interface PageProps {
