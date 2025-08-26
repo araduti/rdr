@@ -8,7 +8,10 @@ import { Providers } from "./providers";
 export const metadata: Metadata = {
   title: "rdr.nu - Lightning Fast URL Shortener",
   description: "Transform your long URLs into short, powerful links. Track analytics, customize links, and boost your digital presence with rdr.nu",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [
+    { rel: "icon", url: "/favicon.svg", type: "image/svg+xml" },
+    { rel: "icon", url: "/favicon.ico", sizes: "any" },
+  ],
   keywords: ["URL shortener", "link shortener", "analytics", "custom links", "QR codes"],
   authors: [{ name: "rdr.nu Team" }],
   openGraph: {
