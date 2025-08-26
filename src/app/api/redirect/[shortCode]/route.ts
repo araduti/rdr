@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "~/server/db";
+import { db } from "@/server/db";
 import { headers } from "next/headers";
 
 export async function GET(
