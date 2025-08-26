@@ -7,13 +7,33 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
+    // NextAuth
+    NEXTAUTH_SECRET:
+      process.env.NODE_ENV === "production"
+        ? z.string()
+        : z.string().optional(),
+    NEXTAUTH_URL: process.env.NODE_ENV === "production"
+      ? z.string().url()
+      : z.string().url().optional(),
+    
+    // Legacy AUTH_SECRET support
     AUTH_SECRET:
       process.env.NODE_ENV === "production"
         ? z.string()
         : z.string().optional(),
-    AUTH_DISCORD_ID: z.string(),
-    AUTH_DISCORD_SECRET: z.string(),
+    
+    // OAuth Providers (optional - choose one or more)
+    AUTH_DISCORD_ID: z.string().optional(),
+    AUTH_DISCORD_SECRET: z.string().optional(),
+    AUTH_GITHUB_ID: z.string().optional(),
+    AUTH_GITHUB_SECRET: z.string().optional(),
+    AUTH_GOOGLE_ID: z.string().optional(),
+    AUTH_GOOGLE_SECRET: z.string().optional(),
+    
+    // Database
     DATABASE_URL: z.string().url(),
+    
+    // Node Environment
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -33,10 +53,25 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    // NextAuth
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    
+    // Legacy AUTH_SECRET support
     AUTH_SECRET: process.env.AUTH_SECRET,
+    
+    // OAuth Providers
     AUTH_DISCORD_ID: process.env.AUTH_DISCORD_ID,
     AUTH_DISCORD_SECRET: process.env.AUTH_DISCORD_SECRET,
+    AUTH_GITHUB_ID: process.env.AUTH_GITHUB_ID,
+    AUTH_GITHUB_SECRET: process.env.AUTH_GITHUB_SECRET,
+    AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
+    AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
+    
+    // Database
     DATABASE_URL: process.env.DATABASE_URL,
+    
+    // Node Environment
     NODE_ENV: process.env.NODE_ENV,
   },
   /**
