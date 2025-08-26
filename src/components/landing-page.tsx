@@ -75,7 +75,6 @@ export function LandingPage() {
           >
             <div className="flex items-center space-x-3">
               <AmpliosoftLogo className="w-8 h-8 text-white" />
-              <span className="text-xl font-bold text-white">rdr.nu</span>
             </div>
           </motion.div>
 
