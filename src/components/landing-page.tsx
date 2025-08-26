@@ -14,7 +14,7 @@ import {
   CopyIcon,
   QrCodeIcon
 } from "lucide-react";
-import { api } from "~/trpc/react";
+import { api } from "@/trpc/react";
 import Link from "next/link";
 
 export function LandingPage() {
