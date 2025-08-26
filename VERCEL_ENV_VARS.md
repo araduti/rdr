@@ -6,8 +6,8 @@ Copy and paste these into your Vercel Environment Variables:
 
 ### Authentication & Security
 ```
-NEXTAUTH_SECRET=8fa207de21193df016b8234bf6b2baa11121c09f5a713703c624b050cd33aff9
-NEXTAUTH_URL=https://rdr.nu
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
 ```
 
 ### Database
