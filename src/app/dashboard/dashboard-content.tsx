@@ -67,9 +67,15 @@ export default function DashboardContent() {
     });
   };
 
-  const handleCopyLink = (url: string) => {
-    void navigator.clipboard.writeText(url);
-    // You could add a toast notification here
+  const handleCopyLink = async (url: string) => {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+        // You could add a toast notification here
+      }
+    } catch (error) {
+      console.warn('Failed to copy to clipboard:', error);
+    }
   };
 
   const handleDeleteLink = (id: string) => {
@@ -92,7 +98,7 @@ export default function DashboardContent() {
             </div>
             <Button
               onClick={() => setShowCreateForm(true)}
-              className="bg-purple-600 hover:bg-purple-700"
+              className="bg-[#3d85b8] hover:bg-[#2c6a94]"
             >
               <PlusIcon className="w-4 h-4 mr-2" />
               Create Link
@@ -111,7 +117,7 @@ export default function DashboardContent() {
               placeholder="Search links..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-neutral-900 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+              className="w-full pl-10 pr-4 py-2 bg-neutral-900 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3d85b8] text-white"
             />
           </div>
         </div>
@@ -120,7 +126,7 @@ export default function DashboardContent() {
         <div className="space-y-4">
           {isLoading ? (
             <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#3d85b8] mx-auto"></div>
             </div>
           ) : linksData?.links.length === 0 ? (
             <div className="text-center py-12">
@@ -129,7 +135,7 @@ export default function DashboardContent() {
               <p className="text-gray-400 mb-4">Create your first short link to get started</p>
               <Button
                 onClick={() => setShowCreateForm(true)}
-                className="bg-purple-600 hover:bg-purple-700"
+                className="bg-[#3d85b8] hover:bg-[#2c6a94]"
               >
                 <PlusIcon className="w-4 h-4 mr-2" />
                 Create Your First Link
@@ -149,7 +155,7 @@ export default function DashboardContent() {
                       <h3 className="text-lg font-medium text-white truncate">
                         {link.title ?? "Untitled Link"}
                       </h3>
-                      <span className="px-2 py-1 bg-purple-600/20 text-purple-400 text-xs rounded-full">
+                      <span className="px-2 py-1 bg-[#3d85b8]/20 text-[#3d85b8] text-xs rounded-full">
                         {link.clicks} clicks
                       </span>
                     </div>
@@ -249,7 +255,7 @@ export default function DashboardContent() {
                   value={formData.url}
                   onChange={(e) => setFormData({ ...formData, url: e.target.value })}
                   placeholder="https://example.com"
-                  className="w-full px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                  className="w-full px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3d85b8] text-white"
                 />
               </div>
               
@@ -262,7 +268,7 @@ export default function DashboardContent() {
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   placeholder="My awesome link"
-                  className="w-full px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                  className="w-full px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3d85b8] text-white"
                 />
               </div>
               
@@ -275,7 +281,7 @@ export default function DashboardContent() {
                   value={formData.customCode}
                   onChange={(e) => setFormData({ ...formData, customCode: e.target.value })}
                   placeholder="my-link"
-                  className="w-full px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                  className="w-full px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3d85b8] text-white"
                 />
                 <p className="text-xs text-gray-400 mt-1">
                   Will be: rdr.nu/{formData.customCode ?? "abc123"}

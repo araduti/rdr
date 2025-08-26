@@ -4,24 +4,10 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import nextDynamic from "next/dynamic";
+import DashboardContent from "./dashboard-content";
 
 // Force dynamic rendering to prevent prerendering issues with useSession
 export const dynamic = 'force-dynamic';
-export const runtime = 'nodejs';
-
-// Dynamically import the dashboard content to prevent SSR issues
-const DashboardContent = nextDynamic(() => import("./dashboard-content"), {
-  ssr: false,
-  loading: () => (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto mb-4"></div>
-        <p className="text-gray-400">Loading Dashboard...</p>
-      </div>
-    </div>
-  ),
-});
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
@@ -30,7 +16,7 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#3d85b8] mx-auto mb-4"></div>
           <p className="text-gray-400">Loading...</p>
         </div>
       </div>
@@ -45,8 +31,8 @@ export default function DashboardPage() {
           <p className="text-gray-400 mb-8">
             You need to be signed in to access the dashboard.
           </p>
-          <Link href="/api/auth/signin">
-            <Button className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+          <Link href="/signin">
+            <Button className="px-6 py-3 bg-[#3d85b8] text-white rounded-lg hover:bg-[#2c6a94]">
               Sign In
             </Button>
           </Link>

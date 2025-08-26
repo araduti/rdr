@@ -75,7 +75,7 @@ export function LandingPage() {
               className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50"
             >
               Transform Links.<br />
-              <span className="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#3d85b8] to-[#2c6a94] bg-clip-text text-transparent">
                 Track Everything.
               </span>
             </motion.div>
@@ -104,12 +104,12 @@ export function LandingPage() {
                   placeholder="Enter your long URL here..."
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  className="flex-1 px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-neutral-400"
+                  className="flex-1 px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3d85b8] text-white placeholder-neutral-400"
                 />
                 <Button
                   onClick={handleShortenUrl}
                   disabled={!url || isLoading}
-                  className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white rounded-lg font-medium transition-all duration-200"
+                  className="px-8 py-3 bg-gradient-to-r from-[#3d85b8] to-[#2c6a94] hover:from-[#2c6a94] hover:to-[#1e4a6e] text-white rounded-lg font-medium transition-all duration-200"
                 >
                   {isLoading ? "Shortening..." : "Shorten"}
                   <ArrowRightIcon className="ml-2 h-4 w-4" />
@@ -127,7 +127,16 @@ export function LandingPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => navigator.clipboard.writeText(shortUrl)}
+                      onClick={async () => {
+                        try {
+                          if (navigator?.clipboard?.writeText) {
+                            await navigator.clipboard.writeText(shortUrl);
+                            // Could add toast notification here
+                          }
+                        } catch (error) {
+                          console.warn('Failed to copy to clipboard:', error);
+                        }
+                      }}
                       className="text-neutral-400 hover:text-white"
                     >
                       <CopyIcon className="h-4 w-4" />
@@ -209,7 +218,7 @@ export function LandingPage() {
                 viewport={{ once: true }}
                 className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-neutral-700 transition-colors"
               >
-                <div className="text-purple-400 mb-4">
+                <div className="text-[#3d85b8] mb-4">
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">

@@ -22,13 +22,12 @@ export const env = createEnv({
         ? z.string()
         : z.string().optional(),
     
-    // OAuth Providers (optional - choose one or more)
-    AUTH_DISCORD_ID: z.string().optional(),
-    AUTH_DISCORD_SECRET: z.string().optional(),
-    AUTH_GITHUB_ID: z.string().optional(),
-    AUTH_GITHUB_SECRET: z.string().optional(),
-    AUTH_GOOGLE_ID: z.string().optional(),
-    AUTH_GOOGLE_SECRET: z.string().optional(),
+    // Email Authentication
+    EMAIL_SERVER_HOST: z.string().optional(),
+    EMAIL_SERVER_PORT: z.string().optional(),
+    EMAIL_SERVER_USER: z.string().optional(),
+    EMAIL_SERVER_PASSWORD: z.string().optional(),
+    EMAIL_FROM: z.string().email().optional(),
     
     // Database
     DATABASE_URL: z.string().url(),
@@ -60,13 +59,12 @@ export const env = createEnv({
     // Legacy AUTH_SECRET support
     AUTH_SECRET: process.env.AUTH_SECRET,
     
-    // OAuth Providers
-    AUTH_DISCORD_ID: process.env.AUTH_DISCORD_ID,
-    AUTH_DISCORD_SECRET: process.env.AUTH_DISCORD_SECRET,
-    AUTH_GITHUB_ID: process.env.AUTH_GITHUB_ID,
-    AUTH_GITHUB_SECRET: process.env.AUTH_GITHUB_SECRET,
-    AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
-    AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
+    // Email Authentication
+    EMAIL_SERVER_HOST: process.env.EMAIL_SERVER_HOST,
+    EMAIL_SERVER_PORT: process.env.EMAIL_SERVER_PORT,
+    EMAIL_SERVER_USER: process.env.EMAIL_SERVER_USER,
+    EMAIL_SERVER_PASSWORD: process.env.EMAIL_SERVER_PASSWORD,
+    EMAIL_FROM: process.env.EMAIL_FROM,
     
     // Database
     DATABASE_URL: process.env.DATABASE_URL,
