@@ -4,7 +4,7 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "~/server/api/trpc";
+} from "@/server/api/trpc";
 
 // Helper function to generate short codes
 function generateShortCode(length = 6): string {
