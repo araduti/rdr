@@ -82,44 +82,27 @@ export function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black antialiased relative overflow-hidden">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-neutral-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-3">
-              <AmpliosoftLogo className="text-[#3d85b8]" size={32} />
-              <span className="text-xl font-bold text-white">rdr.nu</span>
-            </Link>
-            
-            {/* Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="#features" className="text-gray-300 hover:text-white transition-colors">
-                Features
-              </Link>
-              <Link href="#pricing" className="text-gray-300 hover:text-white transition-colors">
-                Pricing
-              </Link>
-              <Link href="#analytics" className="text-gray-300 hover:text-white transition-colors">
-                Analytics
-              </Link>
-            </nav>
-            
-            {/* CTA Button */}
-            <Link href="/signin">
-              <Button className="bg-[#3d85b8] hover:bg-[#2c6a94] text-white">
-                Sign In
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
+      {/* Enhanced Floating Nav with Logo */}
+      <FloatingNav 
+        navItems={[
+          ...navItems,
+          { 
+            name: "rdr.nu", 
+            link: "/", 
+            icon: <AmpliosoftLogo className="text-[#3d85b8]" size={20} />,
+            isLogo: true 
+          }
+        ]} 
+      />
+      
+      {/* Multiple Spotlights for more drama */}
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+      <Spotlight className="top-10 left-full h-[80vh] w-[50vw]" fill="#3d85b8" />
+      <Spotlight className="-top-80 right-0 md:right-60 md:-top-40" fill="white" />
       
       {/* Hero Section */}
-      <div className="max-w-7xl mx-auto relative z-10 w-full pt-24 md:pt-16">
+      <div className="max-w-7xl mx-auto relative z-10 w-full pt-20 md:pt-0">
         <div className="min-h-screen flex flex-col items-center justify-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -131,12 +114,30 @@ export function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50"
+              className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50 relative"
             >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="absolute -top-20 -left-20 w-40 h-40 bg-[#3d85b8]/20 rounded-full blur-3xl"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="absolute -bottom-20 -right-20 w-60 h-60 bg-purple-600/10 rounded-full blur-3xl"
+              />
               Transform Links.<br />
-              <span className="bg-gradient-to-r from-[#3d85b8] to-[#2c6a94] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#3d85b8] via-[#4a90d9] to-[#2c6a94] bg-clip-text text-transparent animate-pulse">
                 Track Everything.
               </span>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                className="absolute -top-10 left-1/2 w-2 h-2 bg-[#3d85b8] rounded-full"
+              />
             </motion.div>
             
             <motion.p
@@ -155,51 +156,107 @@ export function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-12 max-w-2xl mx-auto"
+              className="mt-12 max-w-2xl mx-auto relative"
             >
-              <div className="flex flex-col sm:flex-row gap-4 p-6 rounded-2xl bg-neutral-900/50 backdrop-blur-xl border border-neutral-800">
-                <input
-                  type="url"
-                  placeholder="Enter your long URL here..."
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                  className="flex-1 px-4 py-3 bg-neutral-800/50 border border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3d85b8] text-white placeholder-neutral-400"
-                />
-                <Button
-                  onClick={handleShortenUrl}
-                  disabled={!url || isLoading}
-                  className="px-8 py-3 bg-gradient-to-r from-[#3d85b8] to-[#2c6a94] hover:from-[#2c6a94] hover:to-[#1e4a6e] text-white rounded-lg font-medium transition-all duration-200"
+              {/* Glowing background effect */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="absolute inset-0 bg-gradient-to-r from-[#3d85b8]/20 via-purple-600/10 to-[#3d85b8]/20 rounded-2xl blur-xl"
+              />
+              
+              <div className="relative flex flex-col sm:flex-row gap-4 p-6 rounded-2xl bg-neutral-900/80 backdrop-blur-xl border border-neutral-700/50 shadow-2xl">
+                <div className="flex-1 relative">
+                  <input
+                    type="url"
+                    placeholder="✨ Enter your long URL here..."
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    className="w-full px-4 py-3 bg-neutral-800/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3d85b8] focus:border-transparent text-white placeholder-neutral-400 transition-all duration-200"
+                  />
+                  {/* URL icon */}
+                  <LinkIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
+                </div>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {isLoading ? "Shortening..." : "Shorten"}
-                  <ArrowRightIcon className="ml-2 h-4 w-4" />
-                </Button>
+                  <Button
+                    onClick={handleShortenUrl}
+                    disabled={!url || isLoading}
+                    className="px-8 py-3 bg-gradient-to-r from-[#3d85b8] to-[#2c6a94] hover:from-[#2c6a94] hover:to-[#1e4a6e] text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-[#3d85b8]/25 min-w-[120px]"
+                  >
+                    {isLoading ? (
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full mx-auto"
+                      />
+                    ) : (
+                      <div className="flex items-center">
+                        Shorten
+                        <ArrowRightIcon className="ml-2 h-4 w-4" />
+                      </div>
+                    )}
+                  </Button>
+                </motion.div>
               </div>
               
               {shortUrl && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mt-4 p-4 bg-neutral-800/30 rounded-lg border border-neutral-700"
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ type: "spring", damping: 20, stiffness: 300 }}
+                  className="mt-6 relative"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-green-400 font-mono">{shortUrl}</span>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={async () => {
-                        try {
-                          if (navigator?.clipboard?.writeText) {
-                            await navigator.clipboard.writeText(shortUrl);
-                            // Could add toast notification here
-                          }
-                        } catch (error) {
-                          console.warn('Failed to copy to clipboard:', error);
-                        }
-                      }}
-                      className="text-neutral-400 hover:text-white"
-                    >
-                      <CopyIcon className="h-4 w-4" />
-                    </Button>
+                  {/* Success glow effect */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ duration: 2, repeat: 2 }}
+                    className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-[#3d85b8]/20 rounded-lg blur-sm"
+                  />
+                  
+                  <div className="relative p-6 bg-gradient-to-r from-neutral-900/90 to-neutral-800/90 backdrop-blur-xl border border-green-400/20 rounded-lg shadow-2xl">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.2, type: "spring" }}
+                          className="w-2 h-2 bg-green-400 rounded-full animate-pulse"
+                        />
+                        <span className="text-green-400 font-mono text-lg">{shortUrl}</span>
+                      </div>
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={async () => {
+                            try {
+                              if (navigator?.clipboard?.writeText) {
+                                await navigator.clipboard.writeText(shortUrl);
+                              }
+                            } catch (error) {
+                              console.warn('Failed to copy to clipboard:', error);
+                            }
+                          }}
+                          className="text-neutral-400 hover:text-green-400 hover:bg-green-400/10 transition-all duration-200"
+                        >
+                          <CopyIcon className="h-4 w-4" />
+                        </Button>
+                      </motion.div>
+                    </div>
+                    <motion.div
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ delay: 0.5, duration: 0.8 }}
+                      className="mt-3 h-px bg-gradient-to-r from-green-400 to-[#3d85b8]"
+                    />
                   </div>
                 </motion.div>
               )}
@@ -318,9 +375,11 @@ export function LandingPage() {
         </div>
       </div>
 
-      {/* Professional Footer */}
-      <footer className="bg-neutral-900 border-t border-neutral-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Enhanced Professional Footer */}
+      <footer className="relative bg-gradient-to-br from-neutral-900 via-black to-neutral-900 border-t border-neutral-800/50">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 bg-grid-white/[0.02] mask-gradient-to-b"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Company Info */}
             <div className="md:col-span-1">
