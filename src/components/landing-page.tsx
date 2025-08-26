@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Spotlight } from "./ui/spotlight";
 import { Button } from "./ui/button";
-import { FloatingNav } from "./ui/floating-navbar";
 import { 
   LinkIcon, 
   BarChart3Icon, 
@@ -27,11 +26,7 @@ export function LandingPage() {
   const [shortUrl, setShortUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const navItems = [
-    { name: "Features", link: "#features", icon: <ZapIcon className="h-4 w-4" /> },
-    { name: "Pricing", link: "#pricing", icon: <BarChart3Icon className="h-4 w-4" /> },
-    { name: "Analytics", link: "#analytics", icon: <BarChart3Icon className="h-4 w-4" /> },
-  ];
+
 
   const createLinkMutation = api.link.create.useMutation({
     onSuccess: (data) => {
@@ -61,18 +56,7 @@ export function LandingPage() {
 
   return (
     <div className="min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
-      {/* Enhanced Floating Nav with Logo */}
-      <FloatingNav 
-        navItems={[
-          ...navItems,
-          { 
-            name: "rdr.nu", 
-            link: "/", 
-            icon: <AmpliosoftLogo className="w-5 h-5 text-white" />,
-            isLogo: true 
-          }
-        ]} 
-      />
+
       
       {/* Multiple Spotlights for more drama */}
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
@@ -82,26 +66,29 @@ export function LandingPage() {
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto relative z-10 w-full pt-20 md:pt-0">
         <div className="min-h-screen flex flex-col items-center justify-center px-4">
+          {/* Upper Left Logo */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="absolute top-8 left-8 z-20"
+          >
+            <div className="flex items-center space-x-3">
+              <AmpliosoftLogo className="w-8 h-8 text-white" />
+              <span className="text-xl font-bold text-white">rdr.nu</span>
+            </div>
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            {/* Prominent Logo */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, type: "spring", damping: 15 }}
-              className="flex justify-center mb-8"
-            >
-              <AmpliosoftLogo className="w-24 h-24 md:w-32 md:h-32 text-white drop-shadow-2xl" />
-            </motion.div>
-
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50 relative"
             >
               <motion.div
@@ -139,55 +126,104 @@ export function LandingPage() {
               to amplify their digital presence.
             </motion.p>
 
-            {/* URL Shortener Widget */}
+            {/* Modern URL Shortener Widget */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-12 max-w-2xl mx-auto relative"
+              className="mt-12 max-w-4xl mx-auto relative"
             >
-              {/* Glowing background effect */}
+              {/* Enhanced glowing background */}
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.5 }}
-                className="absolute inset-0 bg-gradient-to-r from-[#3d85b8]/20 via-purple-600/10 to-[#3d85b8]/20 rounded-2xl blur-xl"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.2, delay: 0.4 }}
+                className="absolute -inset-4 bg-gradient-to-r from-[#3d85b8]/30 via-cyan-500/20 to-[#3d85b8]/30 rounded-3xl blur-2xl"
               />
               
-              <div className="relative flex flex-col sm:flex-row gap-4 p-6 rounded-2xl bg-neutral-900/80 backdrop-blur-xl border border-neutral-700/50 shadow-2xl">
-                <div className="flex-1 relative">
-                  <input
-                    type="url"
-                    placeholder="✨ Enter your long URL here..."
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    className="w-full px-4 py-3 bg-neutral-800/50 border border-neutral-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3d85b8] focus:border-transparent text-white placeholder-neutral-400 transition-all duration-200"
-                  />
-                  {/* URL icon */}
-                  <LinkIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-500" />
-                </div>
+              {/* Main input container */}
+              <div className="relative">
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-2xl p-2 shadow-2xl"
                 >
-                  <Button
-                    onClick={handleShortenUrl}
-                    disabled={!url || isLoading}
-                    className="px-8 py-3 bg-gradient-to-r from-[#3d85b8] to-[#2c6a94] hover:from-[#2c6a94] hover:to-[#1e4a6e] text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-[#3d85b8]/25 min-w-[120px]"
-                  >
-                    {isLoading ? (
+                  <div className="flex items-center gap-3">
+                    {/* Enhanced input field */}
+                    <div className="flex-1 relative group">
                       <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                        className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full mx-auto"
+                        className="absolute inset-0 bg-gradient-to-r from-[#3d85b8]/20 to-cyan-500/20 rounded-xl blur-sm opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"
                       />
-                    ) : (
-                      <div className="flex items-center">
-                        Shorten
-                        <ArrowRightIcon className="ml-2 h-4 w-4" />
-                      </div>
-                    )}
-                  </Button>
+                      <input
+                        type="url"
+                        placeholder="Paste your long URL here..."
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                        className="relative w-full px-6 py-4 bg-black/40 border border-white/20 rounded-xl focus:outline-none focus:border-[#3d85b8]/50 focus:bg-black/60 text-white placeholder-neutral-400 transition-all duration-300 text-lg font-medium"
+                      />
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: url ? 1 : 0 }}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2"
+                      >
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                      </motion.div>
+                    </div>
+                    
+                    {/* Enhanced button */}
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <Button
+                        onClick={handleShortenUrl}
+                        disabled={!url || isLoading}
+                        className="px-8 py-4 bg-gradient-to-r from-[#3d85b8] via-[#4a90d9] to-[#2c6a94] hover:from-[#2c6a94] hover:via-[#3d85b8] hover:to-[#1e4a6e] text-white rounded-xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-[#3d85b8]/30 border border-[#3d85b8]/30 min-w-[140px] relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {/* Button shine effect */}
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+                        />
+                        
+                        <div className="relative flex items-center justify-center">
+                          {isLoading ? (
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                              className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                            />
+                          ) : (
+                            <>
+                              <ZapIcon className="w-5 h-5 mr-2" />
+                              Shorten
+                            </>
+                          )}
+                        </div>
+                      </Button>
+                    </motion.div>
+                  </div>
+                  
+                  {/* Quick action buttons */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.7 }}
+                    className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-white/10"
+                  >
+                    <button className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors text-sm">
+                      <QrCodeIcon className="w-4 h-4" />
+                      QR Code
+                    </button>
+                    <button className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors text-sm">
+                      <BarChart3Icon className="w-4 h-4" />
+                      Analytics
+                    </button>
+                    <button className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors text-sm">
+                      <ShieldIcon className="w-4 h-4" />
+                      Custom Domain
+                    </button>
+                  </motion.div>
                 </motion.div>
               </div>
               
