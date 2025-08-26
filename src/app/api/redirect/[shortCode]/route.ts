@@ -4,9 +4,9 @@ import { headers } from "next/headers";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { shortCode: string } }
+  { params }: { params: Promise<{ shortCode: string }> }
 ) {
-  const { shortCode } = params;
+  const { shortCode } = await params;
   const searchParams = request.nextUrl.searchParams;
   
   // Get domain from host header
